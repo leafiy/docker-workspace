@@ -1,0 +1,29 @@
+version: '3'
+services:
+  ubuntu:
+    image: leafiy/ubuntu:latest
+    container_name: ubuntu
+    command: bash -c "service ssh restart && cd ~ && tail -F /dev/null"
+    ports:
+      - "80:80"
+      - "2222:22"
+    volumes:
+      - C:\work\code:/root/code
+      - C:\work\nginx:/etc/nginx/sites-enable
+    restart: always
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    command: "--smallfiles"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    ports:
+      - "27017:27017"
+    volumes:
+      - C:\work\mongo:/data/db
+  redis:
+    image: redis
+    container_name: redis_container
+    ports:
+      - "6379:6379"
